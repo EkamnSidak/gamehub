@@ -1,0 +1,6 @@
+{
+  "name": "Draw a Perfect Circle",
+  "description": "A precision challenge suite featuring Draw a Perfect Circle, Infinite Craft, The Straight Line, The Second, The Middle, The Color, and The Square. Developed by Sidakpreet & Ekamdeep.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
