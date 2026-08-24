@@ -56,6 +56,42 @@ export default function App() {
     }
   }, []);
 
+  // --- SEO: deep links (#circle, #craft, ...) + per-game document titles ---
+  useEffect(() => {
+    const applyHash = () => {
+      const hash = window.location.hash.replace(/^#\/?/, '') as GameMode;
+      const validModes: GameMode[] = ['hub', 'circle', 'line', 'second', 'middle', 'color', 'square', 'craft'];
+      if (validModes.includes(hash)) {
+        setCurrentMode(hash);
+      }
+    };
+    applyHash();
+    window.addEventListener('hashchange', applyHash);
+    return () => window.removeEventListener('hashchange', applyHash);
+  }, []);
+
+  useEffect(() => {
+    const SEO_TITLES: Record<GameMode, string> = {
+      hub: 'GameHub — Draw a Perfect Circle & 7 Free Precision Games Online',
+      circle: 'Draw a Perfect Circle — Free Circle Drawing Game | GameHub',
+      craft: 'Infinite Craft — Free Element Combining Game | GameHub',
+      line: 'The Straight Line — Draw a Perfectly Straight Line Game | GameHub',
+      second: 'The Second — Stop the Timer at Exactly 1.000s | GameHub',
+      middle: 'The Middle — Find the Exact Midpoint Game | GameHub',
+      color: 'The Color — Color Matching & Perception Test | GameHub',
+      square: 'The Square — Draw a Perfect Square Game | GameHub',
+    };
+    document.title = SEO_TITLES[currentMode] ?? SEO_TITLES.hub;
+    const targetHash = currentMode === 'hub' ? '' : `#${currentMode}`;
+    if (window.location.hash !== targetHash) {
+      try {
+        window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${targetHash}`);
+      } catch {
+        // ignore
+      }
+    }
+  }, [currentMode]);
+
   const handleSelectTheme = (theme: GameTheme) => {
     setCurrentTheme(theme);
     try {

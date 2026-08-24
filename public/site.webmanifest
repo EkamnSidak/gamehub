@@ -1,0 +1,28 @@
+{
+  "name": "GameHub — Draw a Perfect Circle & Precision Games",
+  "short_name": "GameHub",
+  "description": "Play 7 free precision browser games: Draw a Perfect Circle, Infinite Craft, The Straight Line, The Second, The Middle, The Color, and The Square. No download, no signup.",
+  "id": "/gamehub/",
+  "start_url": "/gamehub/",
+  "scope": "/gamehub/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFF8E7",
+  "theme_color": "#FFC93C",
+  "lang": "en",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "/gamehub/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/gamehub/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

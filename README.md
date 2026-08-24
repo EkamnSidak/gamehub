@@ -1,6 +1,12 @@
 # Draw a Perfect Circle & Precision Suite 🎯
 
 <div align="center">
+
+**🎮 PLAY NOW → [ekamnsidak.github.io/gamehub](https://ekamnsidak.github.io/gamehub/) — free, no download, no signup**
+
+</div>
+
+<div align="center">
   <img src="public/funny-graph-card.svg" alt="Draw a Perfect Circle Funny Graph Card" width="100%" />
 </div>
 
@@ -141,6 +147,39 @@ GitHub Pages is a static file host that does not run custom Express/Node.js serv
 - **Client-Side Procedural Alchemy Engine**: Dynamically synthesizes emergent element pairings and assigns contextual emojis right in the browser using semantic traits.
 - **Local Cache Persistence**: Discovered elements and custom combinations are automatically stored in `localStorage` (`infinite_craft_static_combos`).
 - **Hybrid Backend Detection**: When running locally or on a Node.js server, `/api/combine` seamlessly augments the game with Gemini LLM logic. When deployed to GitHub Pages, the client-side alchemy engine takes over with 100% feature parity.
+
+---
+
+## 🔍 SEO & Google Search Console
+
+The site ships with a full SEO layer, ready for indexing:
+
+| Asset | Purpose |
+|---|---|
+| Keyword-rich `<title>` + meta description/keywords | Primary on-page SEO for "draw a perfect circle", "infinite craft", "precision games" etc. |
+| `<link rel="canonical">` | Canonical URL: `https://ekamnsidak.github.io/gamehub/` |
+| Open Graph + Twitter Card tags & `og-image.png` (1200×630) | Rich link previews on WhatsApp, X, Facebook, LinkedIn, Discord |
+| JSON-LD structured data (`WebSite`, `WebApplication` + 7 `VideoGame` entries, `FAQPage`) | Google rich results & sitelinks eligibility |
+| `robots.txt` + `sitemap.xml` | Crawler directives & discovery |
+| `site.webmanifest` + favicons (SVG/ICO/PNG/Apple touch) | PWA installability & branded browser tabs |
+| Hash deep links (`#circle`, `#craft`, `#line`, `#second`, `#middle`, `#color`, `#square`) + per-game `document.title` | Shareable game links & descriptive titles |
+
+### Verify ownership in Google Search Console
+
+Ownership is verified via the **HTML file** method — `public/googlec366c670576d1948.html` is served at
+`https://ekamnsidak.github.io/gamehub/googlec366c670576d1948.html`.
+
+1. Open [Google Search Console](https://search.google.com/search-console) → **Add property** → **URL prefix** → `https://ekamnsidak.github.io/gamehub/`.
+2. With the verification file deployed (merged to `main`), click **Verify**.
+3. After verification, go to **Sitemaps** in the sidebar and submit: `https://ekamnsidak.github.io/gamehub/sitemap.xml`.
+4. Optional: use **URL Inspection** on `https://ekamnsidak.github.io/gamehub/` and hit **Request Indexing** to speed up the first crawl.
+5. Keep the verification file in the repo permanently — Google re-checks it periodically.
+
+### Validate structured data
+
+- Rich results: https://search.google.com/test/rich-results
+- Schema markup: https://validator.schema.org/
+- Social previews: https://www.opengraph.xyz/ (or the X Card Validator)
 
 ---
 
