@@ -166,12 +166,14 @@ The site ships with a full SEO layer, ready for indexing:
 
 ### Verify ownership in Google Search Console
 
-1. Open [Google Search Console](https://search.google.com/search-console) → **Add property** → choose **URL prefix** → enter `https://ekamnsidak.github.io/gamehub/`.
-2. Pick the **HTML tag** verification method and copy the token from the snippet Google shows you (`<meta name="google-site-verification" content="TOKEN" />`).
-3. Paste that token into `index.html`, replacing `PASTE_YOUR_VERIFICATION_TOKEN_HERE`.
-4. Push to `main` (the site redeploys automatically), then click **Verify** in Search Console.
-5. After verification, go to **Sitemaps** in the sidebar and submit: `https://ekamnsidak.github.io/gamehub/sitemap.xml`.
-6. Optional: use **URL Inspection** on `https://ekamnsidak.github.io/gamehub/` and hit **Request Indexing** to speed up the first crawl.
+Ownership is verified via the **HTML file** method — `public/googlec366c670576d1948.html` is served at
+`https://ekamnsidak.github.io/gamehub/googlec366c670576d1948.html`.
+
+1. Open [Google Search Console](https://search.google.com/search-console) → **Add property** → **URL prefix** → `https://ekamnsidak.github.io/gamehub/`.
+2. With the verification file deployed (merged to `main`), click **Verify**.
+3. After verification, go to **Sitemaps** in the sidebar and submit: `https://ekamnsidak.github.io/gamehub/sitemap.xml`.
+4. Optional: use **URL Inspection** on `https://ekamnsidak.github.io/gamehub/` and hit **Request Indexing** to speed up the first crawl.
+5. Keep the verification file in the repo permanently — Google re-checks it periodically.
 
 ### Validate structured data
 
