@@ -207,7 +207,6 @@ export function getComboRecipeKey(a: string, b: string): string {
   return [normA, normB].sort().join('+');
 }
 
-// Local combination storage key for browser persistence on static hosts (GitHub Pages)
 const LOCAL_CACHE_KEY = 'infinite_craft_static_combos';
 
 function getLocalStoredCombos(): Record<string, { name: string; emoji: string; isFirstDiscovery?: boolean }> {
@@ -215,7 +214,7 @@ function getLocalStoredCombos(): Record<string, { name: string; emoji: string; i
     const raw = localStorage.getItem(LOCAL_CACHE_KEY);
     if (raw) return JSON.parse(raw);
   } catch {
-    // ignore
+    // Storage can be unavailable in private browsing or non-browser contexts.
   }
   return {};
 }
@@ -226,11 +225,10 @@ function saveLocalCombo(key: string, result: { name: string; emoji: string; isFi
     map[key] = result;
     localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(map));
   } catch {
-    // ignore
+    // The game remains playable when storage is unavailable.
   }
 }
 
-// Client procedural synthesis engine: Combines elements when offline or on static GitHub Pages
 export function proceduralAlchemy(
   elemA: CraftElement,
   elemB: CraftElement
@@ -240,7 +238,6 @@ export function proceduralAlchemy(
   const lowA = nameA.toLowerCase();
   const lowB = nameB.toLowerCase();
 
-  // Same element fusion
   if (lowA === lowB) {
     return {
       name: `Super ${nameA}`,
@@ -249,10 +246,7 @@ export function proceduralAlchemy(
     };
   }
 
-  // Pre-determined thematic combinations
   const combined = `${lowA} ${lowB}`;
-
-  // Elemental traits
   if (combined.includes('dragon') && (combined.includes('robot') || combined.includes('computer') || combined.includes('ai'))) {
     return { name: 'Cyber Dragon', emoji: '🤖', isFirstDiscovery: true };
   }
@@ -272,14 +266,11 @@ export function proceduralAlchemy(
     return { name: 'Thermal Shock', emoji: '♨️', isFirstDiscovery: true };
   }
 
-  // Compound Name Construction
   const words = [nameA, nameB].sort((a, b) => b.length - a.length);
   const synthName = `${words[0]} ${words[1]}`;
-  const emoji = pickContextualEmoji(synthName);
-
   return {
     name: synthName,
-    emoji,
+    emoji: pickContextualEmoji(synthName),
     isFirstDiscovery: true,
   };
 }
@@ -305,47 +296,35 @@ function pickContextualEmoji(text: string): string {
   return '✨';
 }
 
-// Client combine method:
-// 1. Checks BUILTIN_RECIPES (instant zero-latency)
-// 2. Checks local client cache (localStorage)
-// 3. Tries backend `/api/combine` (if running in full-stack mode)
-// 4. Seamlessly falls back to procedural client alchemy (for static GitHub Pages hosting)
+// GitHub Pages is static. It uses the local engine unless an external backend
+// is configured through the VITE_API_BASE_URL Actions variable.
+const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, '');
+const combineApiUrl = configuredApiBaseUrl
+  ? `${configuredApiBaseUrl}/api/combine`
+  : import.meta.env.DEV
+    ? '/api/combine'
+    : null;
+
 export async function combineElements(
   elemA: CraftElement,
   elemB: CraftElement
 ): Promise<{ name: string; emoji: string; isFirstDiscovery?: boolean }> {
   const key = getComboRecipeKey(elemA.name, elemB.name);
 
-  // 1. Check instant built-in dictionary
   if (BUILTIN_RECIPES[key]) {
-    return {
-      ...BUILTIN_RECIPES[key],
-      isFirstDiscovery: false,
-    };
+    return { ...BUILTIN_RECIPES[key], isFirstDiscovery: false };
   }
 
-  // 2. Check local client cache
   const localCache = getLocalStoredCombos();
   if (localCache[key]) {
-    return {
-      ...localCache[key],
-      isFirstDiscovery: false,
-    };
+    return { ...localCache[key], isFirstDiscovery: false };
   }
 
-  // 3. Attempt server endpoint if available
-  // On static hosting (like GitHub Pages at github.io), this will 404 or catch and proceed to step 4
-  const isStaticHost = typeof window !== 'undefined' && (
-    window.location.hostname.includes('github.io') ||
-    window.location.protocol === 'file:'
-  );
-
-  if (!isStaticHost) {
+  if (combineApiUrl) {
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2500);
-
-      const res = await fetch('/api/combine', {
+      const res = await fetch(combineApiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ first: elemA.name, second: elemB.name }),
@@ -355,17 +334,16 @@ export async function combineElements(
 
       if (res.ok) {
         const data = await res.json();
-        if (data && data.name && data.emoji) {
+        if (data?.name && data?.emoji) {
           saveLocalCombo(key, data);
           return data;
         }
       }
     } catch {
-      // Backend not running or timeout -> proceed seamlessly to procedural synthesis
+      // Backend unavailable: continue with static procedural synthesis.
     }
   }
 
-  // 4. Procedural client synthesis engine (Static GitHub Pages Guarantee)
   const syntheticResult = proceduralAlchemy(elemA, elemB);
   saveLocalCombo(key, syntheticResult);
   return syntheticResult;

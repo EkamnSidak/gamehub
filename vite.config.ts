@@ -5,7 +5,10 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: process.env.VITE_BASE || '/gamehub/',
+    // GitHub Pages serves this repository at /gamehub/, not at the domain root.
+    // GitHub Actions sets VITE_BASE; other production hosts default to root.
+    base: process.env.VITE_BASE_PATH || process.env.VITE_BASE ||
+      (process.env.GITHUB_ACTIONS === 'true' ? '/gamehub/' : '/'),
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

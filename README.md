@@ -112,35 +112,38 @@
 
 ## 📦 Build & Deployment
 
-To generate a production-ready build:
+### Express deployment
+
+To build and run the frontend and API on one Node.js host:
 
 ```bash
 npm run build
-```
-
-To start the production server:
-
-```bash
 npm run start
 ```
 
-## 🌐 GitHub Pages Deployment (`https://ekamnsidak.github.io/gamehub/`)
+### GitHub Pages
 
-This repository is pre-configured for automated zero-config deployment to GitHub Pages via GitHub Actions:
+The workflow at `.github/workflows/deploy.yml` builds the Vite frontend
+with the `/gamehub/` base path and deploys `dist/` to GitHub Pages. In the
+repository's **Settings → Pages**, select **GitHub Actions** as the source.
+Pushes to `main` then deploy automatically.
 
-### 1. Enable GitHub Actions as Pages Source
-1. In your GitHub repository (`ekamnsidak/gamehub`), go to **Settings**.
-2. Under **Code and automation** in the sidebar, click **Pages**.
-3. Under **Build and deployment** > **Source**, select **GitHub Actions**.
-4. Push to `main` branch or trigger manually under the **Actions** tab. The automated workflow `.github/workflows/deploy.yml` will build and publish the live site to:
-   👉 **`https://ekamnsidak.github.io/gamehub/`**
+GitHub Pages cannot run `server.ts`. The static deployment uses the built-in
+recipe table, persistent browser cache, and procedural fallback by default, so
+the game remains playable without a server.
 
-### 2. Static Hosting Solution for Infinite Craft (`/api/combine`)
-GitHub Pages is a static file host that does not run custom Express/Node.js servers. To ensure Infinite Craft runs smoothly without backend requirements:
-- **Offline Recipe Database**: Pre-bundled with 200+ popular alchemical recipes that resolve with 0ms latency in the browser.
-- **Client-Side Procedural Alchemy Engine**: Dynamically synthesizes emergent element pairings and assigns contextual emojis right in the browser using semantic traits.
-- **Local Cache Persistence**: Discovered elements and custom combinations are automatically stored in `localStorage` (`infinite_craft_static_combos`).
-- **Hybrid Backend Detection**: When running locally or on a Node.js server, `/api/combine` seamlessly augments the game with Gemini LLM logic. When deployed to GitHub Pages, the client-side alchemy engine takes over with 100% feature parity.
+To retain Gemini-generated combinations, deploy the Express app separately
+(for example on Cloud Run, Render, or Railway), set its `GEMINI_API_KEY`, and
+create the repository Actions variable:
+
+```text
+VITE_API_BASE_URL=https://your-api.example.com
+```
+
+Use only the backend origin (do not append `/api/combine`). The API permits
+requests from `https://ekamnsidak.github.io`; additional origins can be set with
+the backend's comma-separated `FRONTEND_URL` variable. Never put
+`GEMINI_API_KEY` in a `VITE_` variable because those values are public.
 
 ---
 

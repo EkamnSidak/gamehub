@@ -10,6 +10,31 @@ const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
+// Allow the static GitHub Pages frontend to call this API when the Express
+// server is deployed separately. Additional origins can be supplied as a
+// comma-separated FRONTEND_URL value by the backend hosting provider.
+const allowedOrigins = new Set([
+  'https://ekamnsidak.github.io',
+  'http://localhost:3000',
+  ...(process.env.FRONTEND_URL || '').split(',').map((origin) => origin.trim()).filter(Boolean),
+]);
+
+app.use('/api', (req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.has(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  }
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(origin && allowedOrigins.has(origin) ? 204 : 403);
+  }
+
+  next();
+});
+
 // Built-in recipes lookup table for instant zero-latency responses
 const BUILTIN_RECIPES: Record<string, { name: string; emoji: string }> = {
   'fire+water': { name: 'Steam', emoji: '💨' },
