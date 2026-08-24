@@ -124,6 +124,24 @@ To start the production server:
 npm run start
 ```
 
+## 🌐 GitHub Pages Deployment (`https://ekamnsidak.github.io/gamehub/`)
+
+This repository is pre-configured for automated zero-config deployment to GitHub Pages via GitHub Actions:
+
+### 1. Enable GitHub Actions as Pages Source
+1. In your GitHub repository (`ekamnsidak/gamehub`), go to **Settings**.
+2. Under **Code and automation** in the sidebar, click **Pages**.
+3. Under **Build and deployment** > **Source**, select **GitHub Actions**.
+4. Push to `main` branch or trigger manually under the **Actions** tab. The automated workflow `.github/workflows/deploy.yml` will build and publish the live site to:
+   👉 **`https://ekamnsidak.github.io/gamehub/`**
+
+### 2. Static Hosting Solution for Infinite Craft (`/api/combine`)
+GitHub Pages is a static file host that does not run custom Express/Node.js servers. To ensure Infinite Craft runs smoothly without backend requirements:
+- **Offline Recipe Database**: Pre-bundled with 200+ popular alchemical recipes that resolve with 0ms latency in the browser.
+- **Client-Side Procedural Alchemy Engine**: Dynamically synthesizes emergent element pairings and assigns contextual emojis right in the browser using semantic traits.
+- **Local Cache Persistence**: Discovered elements and custom combinations are automatically stored in `localStorage` (`infinite_craft_static_combos`).
+- **Hybrid Backend Detection**: When running locally or on a Node.js server, `/api/combine` seamlessly augments the game with Gemini LLM logic. When deployed to GitHub Pages, the client-side alchemy engine takes over with 100% feature parity.
+
 ---
 
 ## 👥 Credits & Authors
