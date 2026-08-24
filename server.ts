@@ -4,7 +4,9 @@ import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
 
 const app = express();
-const PORT = 3000;
+// Hosting platforms assign the listening port at runtime. Falling back to 3000
+// keeps local development unchanged while allowing production/live previews.
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
@@ -279,7 +281,14 @@ async function startServer() {
   // Vite middleware in dev mode
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
-      server: { middlewareMode: true, host: '0.0.0.0', port: PORT },
+      server: {
+        middlewareMode: true,
+        host: '0.0.0.0',
+        port: PORT,
+        // Live-preview providers proxy the app through a generated hostname.
+        // Vite 6 rejects that host by default unless proxy hosts are allowed.
+        allowedHosts: true,
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);
