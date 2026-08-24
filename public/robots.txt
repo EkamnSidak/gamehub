@@ -1,0 +1,5 @@
+# GameHub — https://ekamnsidak.github.io/gamehub/
+User-agent: *
+Allow: /
+
+Sitemap: https://ekamnsidak.github.io/gamehub/sitemap.xml
