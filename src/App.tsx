@@ -13,9 +13,10 @@ import { TheSquareGame } from './components/games/TheSquareGame';
 import { InfiniteCraftGame } from './components/games/InfiniteCraftGame';
 import { StatsModal } from './components/StatsModal';
 import { CommonShareModal } from './components/CommonShareModal';
+import { GameThumbnailsCard } from './components/GameThumbnailsCard';
 
 export default function App() {
-  const [currentMode, setCurrentMode] = useState<GameMode>('circle');
+  const [currentMode, setCurrentMode] = useState<GameMode>('craft');
   const [currentTheme, setCurrentTheme] = useState<GameTheme>(THEMES[0]);
   const [isMuted, setIsMuted] = useState(false);
   const [allScores, setAllScores] = useState<AllGameScores>({});
@@ -217,6 +218,14 @@ export default function App() {
             onOpenShareModal={handleOpenShareModal}
           />
         )}
+
+        {/* All Games Deck with Thumbnails under Canvas / Game Stage */}
+        <GameThumbnailsCard
+          currentMode={currentMode}
+          onSelectGame={(mode) => setCurrentMode(mode)}
+          scores={allScores}
+          darkText={currentTheme.darkText}
+        />
       </main>
 
       {/* Global Bottom Credits */}

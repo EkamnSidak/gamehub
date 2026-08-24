@@ -3,6 +3,7 @@ import { CircleResult, GameTheme, BestScoreRecord } from '../../types';
 import { DrawingCanvas } from '../DrawingCanvas';
 import { ScoreResult } from '../ScoreResult';
 import { RecentHistory } from '../RecentHistory';
+import { sound } from '../../utils/audio';
 import confetti from 'canvas-confetti';
 
 interface TheCircleGameProps {
@@ -79,9 +80,18 @@ export const TheCircleGame: React.FC<TheCircleGameProps> = ({
             <ScoreResult
               result={activeResult}
               isNewBest={isNewBest}
-              onRetry={() => {
+              onTryAgain={() => {
+                sound.playClick();
                 setActiveResult(null);
                 setIsNewBest(false);
+              }}
+              onRetry={() => {
+                sound.playClick();
+                setActiveResult(null);
+                setIsNewBest(false);
+              }}
+              onOpenShareModal={() => {
+                onOpenShareModal('DRAW A PERFECT CIRCLE', activeResult.score, activeResult.verdict);
               }}
               onShare={() => {
                 onOpenShareModal('DRAW A PERFECT CIRCLE', activeResult.score, activeResult.verdict);

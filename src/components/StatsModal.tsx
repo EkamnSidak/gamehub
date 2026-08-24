@@ -11,13 +11,13 @@ interface StatsModalProps {
 }
 
 const GAME_INFO: { id: GameMode; name: string; emoji: string; bg: string }[] = [
+  { id: 'craft', name: 'Infinite Craft', emoji: '♾️', bg: '#FFC93C' },
   { id: 'circle', name: 'Circle', emoji: '⭕', bg: '#FFC93C' },
   { id: 'line', name: 'Straight Line', emoji: '📏', bg: '#7C77B9' },
   { id: 'second', name: 'The Second', emoji: '⏱️', bg: '#FF4B4B' },
   { id: 'middle', name: 'The Middle', emoji: '🎯', bg: '#2EC4B6' },
   { id: 'color', name: 'The Color', emoji: '🎨', bg: '#FF9F1C' },
   { id: 'square', name: 'The Square', emoji: '⬛', bg: '#4ECDC4' },
-  { id: 'craft', name: 'Infinite Craft', emoji: '♾️', bg: '#FFC93C' },
 ];
 
 export const StatsModal: React.FC<StatsModalProps> = ({

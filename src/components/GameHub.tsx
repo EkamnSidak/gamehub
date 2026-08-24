@@ -22,16 +22,6 @@ interface GameCardMeta {
 
 const GAMES_LIST: GameCardMeta[] = [
   {
-    id: 'circle',
-    title: 'Draw a Circle',
-    tagline: 'Radial Precision',
-    description: 'Draw a single continuous freehand loop. Scored on geometric roundness, centroid consistency, and closure accuracy.',
-    emoji: '⭕',
-    accentBg: '#FFC93C',
-    gradient: 'from-amber-400/20 to-orange-400/10',
-    difficulty: 'Mastery',
-  },
-  {
     id: 'craft',
     title: 'Infinite Craft',
     tagline: 'AI Emergent Alchemy',
@@ -40,6 +30,16 @@ const GAMES_LIST: GameCardMeta[] = [
     accentBg: '#FFC93C',
     gradient: 'from-yellow-400/20 to-emerald-400/10',
     difficulty: 'Infinite',
+  },
+  {
+    id: 'circle',
+    title: 'Draw a Circle',
+    tagline: 'Radial Precision',
+    description: 'Draw a single continuous freehand loop. Scored on geometric roundness, centroid consistency, and closure accuracy.',
+    emoji: '⭕',
+    accentBg: '#FFC93C',
+    gradient: 'from-amber-400/20 to-orange-400/10',
+    difficulty: 'Mastery',
   },
   {
     id: 'line',

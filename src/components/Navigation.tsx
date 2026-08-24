@@ -16,13 +16,13 @@ interface NavigationProps {
 }
 
 const GAME_TABS: { id: GameMode; name: string; icon: string; bg: string }[] = [
+  { id: 'craft', name: 'Craft', icon: '♾️', bg: '#FFC93C' },
   { id: 'circle', name: 'Circle', icon: '⭕', bg: '#FFC93C' },
   { id: 'line', name: 'Line', icon: '📏', bg: '#7C77B9' },
   { id: 'second', name: 'Second', icon: '⏱️', bg: '#FF4B4B' },
   { id: 'middle', name: 'Middle', icon: '🎯', bg: '#2EC4B6' },
   { id: 'color', name: 'Color', icon: '🎨', bg: '#FF9F1C' },
   { id: 'square', name: 'Square', icon: '⬛', bg: '#4ECDC4' },
-  { id: 'craft', name: 'Craft', icon: '♾️', bg: '#FFC93C' },
 ];
 
 export const Navigation: React.FC<NavigationProps> = ({

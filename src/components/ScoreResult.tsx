@@ -6,8 +6,10 @@ import confetti from 'canvas-confetti';
 
 interface ScoreResultProps {
   result: CircleResult;
-  onTryAgain: () => void;
-  onOpenShareModal: () => void;
+  onTryAgain?: () => void;
+  onRetry?: () => void;
+  onOpenShareModal?: () => void;
+  onShare?: () => void;
   isNewBest: boolean;
   accentColor: string;
 }
@@ -15,11 +17,29 @@ interface ScoreResultProps {
 export const ScoreResult: React.FC<ScoreResultProps> = ({
   result,
   onTryAgain,
+  onRetry,
   onOpenShareModal,
+  onShare,
   isNewBest,
 }) => {
   const [displayScore, setDisplayScore] = useState(0);
   const [copied, setCopied] = useState(false);
+
+  const handleTryAgain = () => {
+    if (onTryAgain) {
+      onTryAgain();
+    } else if (onRetry) {
+      onRetry();
+    }
+  };
+
+  const handleOpenShare = () => {
+    if (onOpenShareModal) {
+      onOpenShareModal();
+    } else if (onShare) {
+      onShare();
+    }
+  };
 
   // Animated Count Up
   useEffect(() => {
@@ -64,13 +84,13 @@ export const ScoreResult: React.FC<ScoreResultProps> = ({
         if (document.activeElement?.tagName !== 'INPUT') {
           e.preventDefault();
           sound.playClick();
-          onTryAgain();
+          handleTryAgain();
         }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onTryAgain]);
+  }, [onTryAgain, onRetry]);
 
   const handleQuickShare = async () => {
     sound.playClick();
@@ -163,7 +183,7 @@ export const ScoreResult: React.FC<ScoreResultProps> = ({
           id="try-again-btn"
           onClick={() => {
             sound.playClick();
-            onTryAgain();
+            handleTryAgain();
           }}
           className="flex-1 bg-[#1A1A1A] text-white py-3.5 sm:py-4 px-6 rounded-2xl font-black text-sm uppercase tracking-wider transition-all hover:scale-[1.03] active:scale-[0.97] flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_0px_rgba(255,201,60,1)] border border-neutral-700"
         >
@@ -187,7 +207,7 @@ export const ScoreResult: React.FC<ScoreResultProps> = ({
         id="export-card-btn"
         onClick={() => {
           sound.playClick();
-          onOpenShareModal();
+          handleOpenShare();
         }}
         className="text-[11px] font-black text-neutral-400 hover:text-neutral-900 uppercase tracking-widest flex items-center gap-1.5 transition-colors cursor-pointer"
       >
