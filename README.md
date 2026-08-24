@@ -1,8 +1,24 @@
 # Draw a Perfect Circle & Precision Suite 🎯
 
-A sleek, physics-infused precision micro-game suite and infinite discovery laboratory built with React, TypeScript, Tailwind CSS, HTML5 Canvas, and Gemini AI.
+<div align="center">
+  <img src="public/funny-graph-card.svg" alt="Draw a Perfect Circle Funny Graph Card" width="100%" />
+</div>
 
+<br/>
+
+> **"Expectation: 100% Circle ⭕ | Reality: 43.8% Potato 🥔"**
+> 
+> A sleek, physics-infused precision micro-game suite and infinite discovery laboratory built with React, TypeScript, Tailwind CSS, HTML5 Canvas, and Gemini AI.
+>
 > **Developed by Sidakpreet & Ekamdeep**
+
+<details>
+<summary><b>📂 View Official Minimalist Repo Card</b></summary>
+<br/>
+<div align="center">
+  <img src="public/repo-card.svg" alt="Official Repo Card" width="100%" />
+</div>
+</details>
 
 ---
 
